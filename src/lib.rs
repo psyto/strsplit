@@ -20,7 +20,10 @@ pub trait Delimiter {
     fn find_next(&self, s: &str) -> Option<(usize, usize)>;
 }
 
-impl<'haystack, D> Iterator for StrSplit<'haystack, D> where D: Delimiter, {
+impl<'haystack, D> Iterator for StrSplit<'haystack, D>
+where
+    D: Delimiter,
+{
     type Item = &'haystack str;
     fn next(&mut self) -> Option<Self::Item> {
         let remainder = self.remainder.as_mut()?;
@@ -43,8 +46,8 @@ impl Delimiter for &str {
 impl Delimiter for char {
     fn find_next(&self, s: &str) -> Option<(usize, usize)> {
         s.char_indices()
-        .find(|(_, c)| c == self)
-        .map(|(start, _)| (start, start + self.len_utf8()))
+            .find(|(_, c)| c == self)
+            .map(|(start, _)| (start, start + self.len_utf8()))
     }
 }
 
