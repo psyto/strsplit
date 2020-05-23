@@ -1,6 +1,7 @@
 //!
-#![warn(missing_debug_implementations, rust_2018_idioms, missing_docs)]
+// #![warn(missing_debug_implementations, rust_2018_idioms, missing_docs)]
 
+#[derive(Debug)]
 pub struct StrSplit<'a> {
     remainder: &'a str,
     delimiter: &'a str,
@@ -27,7 +28,7 @@ impl<'a> Iterator for StrSplit<'a> {
             None
         } else {
             let rest = self.remainder;
-            self.remainder = &[];
+            self.remainder = "";
             Some(rest)
         }
     }
@@ -37,5 +38,5 @@ impl<'a> Iterator for StrSplit<'a> {
 fn it_works() {
     let haystack = "a b c d e";
     let letters = StrSplit::new(haystack, " ");
-    assert_eq!(letters, vec!["a", "b", "c", "d", "e"].into_iter());
+    assert!(letters.eq(vec!["a", "b", "c", "d", "e"].into_iter()));
 }
